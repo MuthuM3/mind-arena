@@ -319,7 +319,8 @@ measured need.
 - Add real-time transport with the first live-room prototype.
 - Add Redis only for a measured ephemeral coordination/cache requirement.
 - Split services only for demonstrated scale, isolation, or ownership.
-- Add on-device generative facilitation only after a device/privacy feasibility gate.
+- Add on-device generative facilitation only after the device, privacy, quality, license, and
+  performance gate in [Hybrid AI Facilitation](hybrid-ai-facilitation.md).
 - Add organization tenancy only with the Purpose Arena milestone.
 - Add end-to-end encryption only after defining which moderation and facilitation capabilities it
   changes; never imply it before implementation proves it.

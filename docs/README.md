@@ -14,7 +14,7 @@ from replaceable technical choices.
 
 ## Product systems
 
-- [Content and facilitation system](product/content-and-facilitation.md)
+- [Arena Content Bible and facilitation system](product/content-and-facilitation.md)
 - [Community, trust, and safety](product/community-trust-safety.md)
 - [Business model](product/business-model.md)
 - [Go-to-market](operations/go-to-market.md)
@@ -24,10 +24,14 @@ from replaceable technical choices.
 - [System architecture](architecture/system-architecture.md)
 - [Domain and event model](architecture/domain-and-events.md)
 - [AI, privacy, and data strategy](architecture/ai-privacy-data.md)
+- [Adaptive client and performance foundation](architecture/adaptive-client-and-performance.md)
+- [Hybrid AI facilitation](architecture/hybrid-ai-facilitation.md)
+- [Frontend architecture and implementation guide](frontend/mind_arena_frontend_architecture_implementation_guide.md)
 
 ## Execution
 
 - [Product execution program](status/product-execution-program.md)
+- [Implementation readiness ledger](status/implementation-readiness.md)
 - [Validation plan](research/validation-plan.md)
 - [Decision framework](operations/decision-framework.md)
 - [Risk register](operations/risk-register.md)
@@ -41,6 +45,8 @@ from replaceable technical choices.
 - [ADR-0004: Asynchronous Perspective Sprint](decisions/0004-asynchronous-perspective-sprint.md)
 - [ADR-0005: Today’s Arena and Arena Engine](decisions/0005-todays-arena-and-arena-engine.md)
 - [ADR-0006: Age-adaptive foundation with adult-only V1](decisions/0006-age-adaptive-foundation.md)
+- [ADR-0007: Adaptive cross-platform client and service boundaries](decisions/0007-adaptive-cross-platform-client-and-service-boundaries.md)
+- [ADR-0008: Bounded hybrid AI facilitation](decisions/0008-bounded-hybrid-ai-facilitation.md)
 
 The product vision and V1 PRD are authority. Architecture describes the minimum route to the current
 product, not permission to build every future capability. The execution program is the active scope

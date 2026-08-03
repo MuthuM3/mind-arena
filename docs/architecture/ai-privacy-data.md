@@ -44,6 +44,9 @@ There is no general “chat” or `Reason()` endpoint. Each AI task has:
 - human-review requirement;
 - evaluation suite.
 
+Execution-mode routing, offline truth boundaries, and the deterministic/local/cloud fallback order
+are governed by [Hybrid AI Facilitation](hybrid-ai-facilitation.md).
+
 Future fictional-character dialogue uses a separate, clearly labeled actor contract. It does not
 share human-participant provenance and is not included in V1’s unrestricted interaction surface.
 

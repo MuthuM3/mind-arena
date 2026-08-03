@@ -1,12 +1,13 @@
 # Mind Arena — Frontend Architecture & Implementation Guide
 
-> **Version:** 1.0  
-> **Status:** Active frontend source of truth  
-> **Current milestone:** M1.4 — Experience Design  
-> **Next milestone:** M1.5 — Experience Prototype  
-> **Target stack:** Flutter for mobile, web, and desktop  
-> **Implementation strategy:** Experience design first, mock platform second, backend later  
+> **Version:** 1.1
+> **Status:** Active frontend source of truth
+> **Current milestone:** M1.4 — Experience Design
+> **Next milestone:** M1.5 — Experience Prototype
+> **Target stack:** Flutter for mobile, tablet, laptop, web, and desktop
+> **Implementation strategy:** Experience design first, mock platform second, backend later
 > **Core rule:** The frontend must behave like a complete product before it connects to production services.
+> **Day-one rule:** Every implemented slice is adaptive, accessible, and performance-budgeted across compact, medium, and expanded windows.
 
 ---
 
@@ -398,23 +399,39 @@ We will consider this product thesis promising when users during testing:
 > [!NOTE]
 > Changing one's opinion is **not** the primary metric. A clarified position or responsibly reinforced stance represents a successful Mind Shift.
 
-### Reduced M1.5 Platform Commitment & Tiering
+### M1.5 Platform Commitment & Certification
 
-To protect the sensory polish of the flagship experience during M1.5, multi-platform support follows a strict priority cascade:
+Mind Arena supports mobile, tablet, laptop, responsive web, and desktop-class windows from the
+first implemented slice. Platform certification prioritizes sensory polish without postponing
+layout, input, accessibility, or performance correctness on larger devices.
 
 ```text
-Primary Experience Platform (Mobile)
-    ↓
-Secondary Validation Platform (Responsive Web)
-    ↓
-Compatibility-Only Platforms (Desktop & Remaining Mobile OS)
+Experience-Certified Flagship
+Mobile phone
+
+Functionally Validated From Day One
+Tablet + responsive web + laptop + desktop
 ```
 
 #### Platform Certification Levels
 
 - **Experience-Certified (Flagship):** Full visual, motion, audio, haptic, accessibility, and performance review.
-- **Functionally Supported:** Complete flow and accessibility, with simplified platform-specific polish.
-- **Not Yet Validated:** App compiles and runs, but layout/motion polish is not gated for M1.5 acceptance.
+- **Functionally Validated:** Complete adaptive flow, accessibility, input, resize/state preservation, and performance review, with platform-appropriate sensory polish.
+- **Not Yet Validated:** Permitted only for an initial project runner or disposable feasibility spike; no user-observable slice can be marked complete in this state.
+
+#### Day-One Device and Window Matrix
+
+| Device class | Initial window contract | Required input and composition |
+| :--- | :--- | :--- |
+| Mobile | Compact, below 600 logical pixels | Touch-first focused column; portrait and landscape |
+| Tablet | Medium, 600–1023 logical pixels, plus split view | Touch, keyboard, and pointer; supporting rail or two-pane composition where useful |
+| Laptop | Expanded, 1024 logical pixels and above | Keyboard and pointer; deliberate information density and visible focus |
+| Desktop | Expanded and freely resizable across every class | Keyboard, pointer, window resize, state preservation, and no stretched-phone composition |
+
+Breakpoints are centralized tokens, never scattered device checks. Components respond to their
+local constraints. Resizing across classes preserves the active scene, selection, draft, focus
+intent, and scroll intent. The exact budgets and verification matrix are authoritative in
+`docs/architecture/adaptive-client-and-performance.md`.
 
 ### Required Qualities
 
@@ -425,7 +442,10 @@ Compatibility-Only Platforms (Desktop & Remaining Mobile OS)
 - Intentional scene transitions
 - Complete loading, error, empty, retry, and offline states
 - Realistic delays and simulated service behavior
-- Mobile experience-certified, web functionally supported
+- Mobile experience-certified; tablet, responsive web, laptop, and desktop functionally validated
+- Compact, medium, and expanded layouts verified for every user-observable slice
+- Touch, keyboard, and pointer behavior verified from the first interactive component
+- Startup, input-response, frame-time, memory, and layout-stability budgets measured from the first scene
 - Accessibility support
 - Suitable for moderated and unmoderated user testing
 - Repository contracts ready for later API replacement
@@ -498,6 +518,11 @@ These rules apply to every epic and every feature.
 - Accessibility is part of component completion, not a later patch.
 - Reduced-motion support is required for all nonessential animation.
 - The mock platform must support success, delay, failure, timeout, offline, and malformed-state simulation.
+- Every user-observable slice must compose intentionally at compact, medium, and expanded widths.
+- Responsive behavior must be constraint-driven; operating-system or device-name branches cannot choose layout.
+- Touch, keyboard, pointer, text scaling, reduced motion, and state-preserving resize are day-one requirements.
+- Performance budgets are acceptance criteria from the first scene, not a hardening-only activity.
+- Performance evidence must be collected in profile or release mode on representative devices; debug timings are diagnostic only.
 
 ---
 
@@ -936,7 +961,8 @@ A token-driven system improves consistency, accessibility, speed, theming, and f
 - Themes can change without rewriting components.
 - Text remains readable at supported scale factors.
 - All semantic states have defined visual treatments.
-- Layout behavior is documented for phone, tablet, desktop, and web.
+- Layout behavior is documented and tested for mobile, tablet, laptop, desktop, and responsive web.
+- Breakpoint transitions preserve semantic order, state, focus intent, and readable line length.
 - Color contrast meets accessibility targets.
 - The visual language clearly feels like Mind Arena.
 
@@ -2312,6 +2338,10 @@ A reflective experience depends on pacing. Jank, delayed interaction, asset popp
 
 Performance must be treated as an experience quality, not only a technical metric.
 
+Epic 17 owns the formal performance program, but it does not defer performance work until Stage 4.
+Every earlier component and scene must meet the current budgets and contribute measurements as it
+is introduced. Performance regressions block completion of the slice that caused them.
+
 ## Scope
 
 - Startup time
@@ -2368,6 +2398,8 @@ Performance must be treated as an experience quality, not only a technical metri
 - No critical memory growth occurs during repeated Arena runs.
 - Large assets do not block interaction readiness.
 - Performance regressions are detected before release.
+- Compact, medium, and expanded compositions are profiled on representative mobile and desktop-class hardware.
+- Resize, text scaling, keyboard interaction, and reduced motion do not introduce layout instability or sustained frame regressions.
 - Reduced-motion mode does not hide performance problems in standard mode.
 
 ## Future Extensions
@@ -2957,8 +2989,12 @@ A component is complete when it has:
 - all interaction states;
 - accessibility semantics;
 - keyboard behavior where relevant;
-- responsive behavior;
+- intentional compact, medium, and expanded behavior;
+- touch, keyboard, and pointer behavior where applicable;
+- text scaling without clipped content or hidden actions;
+- state-preserving resize behavior where state is owned above the component;
 - reduced-motion behavior where relevant;
+- performance evidence when the component affects startup, animation, scrolling, or repeated rebuilds;
 - widget tests;
 - golden coverage for major states;
 - no repository or feature business logic.
@@ -2975,12 +3011,16 @@ A scene is complete when it has:
 - retry behavior;
 - offline behavior where relevant;
 - focus behavior;
+- compact, medium, and expanded composition tests;
+- touch, keyboard, and pointer-path checks;
+- text-scaling and state-preserving resize checks;
 - accessibility announcements;
 - transition behavior;
 - interruption behavior;
 - restoration behavior;
 - analytics events without sensitive content;
 - scene tests.
+- profile-mode performance evidence against the current startup, response, frame, and memory budgets.
 
 ## 14.3 Repository completion
 
@@ -3216,7 +3256,7 @@ Do **NOT** begin the full Flutter vertical slice implementation until these 9 fo
 | 1. Primary M1.5 User Definition | Approved |
 | 2. Product Hypothesis & Thresholds | Approved |
 | 3. Real Perspective Provenance Plan | Pending M1.4 |
-| 4. Arena Content Bible | Pending M1.4 |
+| 4. Arena Content Bible | Draft complete; approval pending |
 | 5. Mind Design Bible | Pending M1.4 |
 | 6. Seven Scene Storyboards (TA-01 to TA-07) | Pending M1.4 |
 | 7. M1.5 Research Protocol & Script | Pending M1.4 |

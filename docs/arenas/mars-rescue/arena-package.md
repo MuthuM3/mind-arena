@@ -13,6 +13,8 @@
 
 ## Related Artifacts
 
+- [Arena Content Bible](../../product/content-and-facilitation.md)
+- [Hybrid AI Facilitation](../../architecture/hybrid-ai-facilitation.md)
 - [Consequences and Facilitation](consequences-and-facilitation.md)
 - [Perspective and Safety Review](perspective-and-safety-review.md)
 - [Mind Shift and Result Card](mind-shift-and-result-card.md)

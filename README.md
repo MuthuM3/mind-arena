@@ -56,3 +56,12 @@ Start with:
 5. [System architecture](docs/architecture/system-architecture.md)
 6. [Validation plan](docs/research/validation-plan.md)
 7. [Age-adaptive foundation](docs/product/age-adaptive-experience.md)
+
+## Frontend workspace
+
+The setup-only Flutter client lives in [`apps/mind_arena`](apps/mind_arena/README.md). It targets
+Android, iOS, web, macOS, Linux, and Windows from one project. Product scenes remain gated by the
+M1.4 approvals in the
+[frontend architecture guide](docs/frontend/mind_arena_frontend_architecture_implementation_guide.md).
+The current technical and experience gates are tracked in the
+[implementation readiness ledger](docs/status/implementation-readiness.md).
