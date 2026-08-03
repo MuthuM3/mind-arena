@@ -55,6 +55,12 @@ Record durable changes to product scope or architecture under `docs/decisions/`.
 - Validate the human interaction before automating it with AI.
 - Do not add a service, database, queue, model, or abstraction without a current milestone need.
 - Prefer a modular monolith and explicit contracts over premature microservices.
+- Treat Identity, Arena, Perspective, Moderation, Facilitation, and Exchange as bounded contexts
+  that can be extracted only when operational evidence justifies it.
+- Build every client slice for compact, medium, and expanded windows with shared domain logic.
+- Support touch, keyboard, pointer, text scaling, reduced motion, and state-preserving resize from
+  the first implemented screen.
+- Keep roles, stages, prompts, and consequences in versioned arena data, not widget branches.
 - Every AI behavior requires a deterministic fallback, timeout, evaluation case, and user escape.
 - Every social feature requires an abuse case, moderation path, and density/cold-start plan.
 - Do not commit credentials, private contributions, moderation exports, or production data.

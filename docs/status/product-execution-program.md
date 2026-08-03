@@ -69,7 +69,7 @@ These are planning ranges, not release promises.
 ### Exit
 
 Complete when documents are internally consistent and V1 can be prototyped without unresolved
-product scope. Automation remains out of this milestone.
+product scope.
 
 ## M1 — Today’s Arena experience proof
 
@@ -103,7 +103,10 @@ Include reduced-motion, empty-pool, unsafe-content, and withdrawal states.
 
 #### M1.3 Manual prototype
 
-- simple tappable UI;
+- simple tappable adaptive UI for phone, tablet, and desktop;
+- local fixture repository behind production-shaped domain interfaces;
+- compact, medium, and expanded layout plus keyboard/focus checks;
+- first usable-frame and interaction-response measurements;
 - researcher-operated perspective pool;
 - manual matching and moderation;
 - manual consequence and Mind Shift template;
@@ -161,11 +164,14 @@ Build the minimum safe self-service product with deterministic/manual facilitati
 #### M3.1 Repository and delivery foundation
 
 - Flutter and Go workspace;
+- constraint-driven phone, tablet, and desktop application shell;
+- clean presentation/application/domain/infrastructure dependency boundaries;
+- data-driven arena roles and versioned package repository;
+- microservice-ready server contexts in one deployable modular monolith;
 - local development environment;
 - code quality/test conventions;
 - environment and secret handling;
 - CI;
-- Agentflow/Antigravity automation using stable product authority.
 
 #### M3.2 Identity and eligibility
 
@@ -359,4 +365,4 @@ Deferred means a new product decision is required.
 4. Build a tappable, manually operated prototype.
 5. Run Stage 0 language tests.
 6. Run 12–20 manual human exchanges.
-7. Decide whether the atomic interaction passes before setting up implementation automation.
+7. Decide whether the atomic interaction passes before expanding implementation infrastructure.

@@ -163,6 +163,21 @@ The spatial arena must have an equivalent ordered representation:
 Every object includes type, author class, relationship, state, and actions in its accessible label.
 Color, motion, and position are never the only indicators.
 
+## Adaptive product composition
+
+Mind Arena is designed for phone, tablet, and desktop from the first coded scene. The same arena
+state and semantic sequence are composed differently:
+
+- compact windows use one focused column and staged disclosure;
+- medium windows may pair the active stage with supporting context;
+- expanded windows may keep navigation, the arena stage, and contextual detail visible together.
+
+Desktop is not a stretched mobile layout. It includes keyboard navigation, visible focus, pointer
+states, resizable-window behavior, and readable line-length constraints. Tablet split view,
+orientation changes, safe areas, enlarged text, and reduced motion preserve the participant's
+active stage and draft. The complete engineering contract is in
+`docs/architecture/adaptive-client-and-performance.md`.
+
 ## Performance budgets
 
 Before implementation, define measurable budgets for:

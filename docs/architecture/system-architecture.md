@@ -11,7 +11,7 @@ live-room infrastructure prematurely.
 ## V1 system shape
 
 ```text
-Flutter mobile client
+Adaptive Flutter client (phone, tablet, desktop)
 ├── arena experience/state machine
 ├── local draft and reflection store
 ├── design/accessibility system
@@ -60,8 +60,10 @@ microservices, Redis, WebSockets, a message broker, or Kubernetes.
 ### Technology
 
 Flutter is the chosen client direction because the experience depends on custom rendering,
-consistent motion, accessibility, and mobile delivery. Riverpod is the initial state/dependency
-composition choice.
+consistent motion, accessibility, and delivery across phone, tablet, and desktop. Riverpod is the
+initial state/dependency composition choice. Constraint-driven window classes, input support,
+performance budgets, and verification rules are authoritative in
+`adaptive-client-and-performance.md`.
 
 ### Modules
 
@@ -87,7 +89,8 @@ features/
   safety_controls/
 ```
 
-The arena state machine and domain objects are independent of widget lifecycle.
+The arena state machine and domain objects are independent of widget lifecycle. Roles and arena
+content are versioned data behind repository contracts, never hardcoded into widgets.
 
 ### Local persistence
 
@@ -104,6 +107,11 @@ response delivery. It also enforces eligibility and keeps audience-isolated pool
 separate.
 
 ## Server modules
+
+These are bounded contexts inside one deployable modular monolith. Each owns its logic and reaches
+another context through an application contract rather than shared internals. They are
+microservice-ready boundaries, not separately deployed services. Extraction requires measured
+scale, security, availability, cadence, or ownership evidence.
 
 ### Identity
 

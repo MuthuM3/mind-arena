@@ -13,9 +13,3 @@ build/
 coverage/
 dist/
 *.log
-
-# Agentflow runtime
-.agentflow/runs/
-.agentflow/cache/
-.agentflow/active.lock
-.agent-task.md

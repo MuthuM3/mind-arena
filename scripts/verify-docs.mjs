@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
-const excludedDirectories = new Set([".agentflow", ".git", "build", "dist", "node_modules"]);
+const excludedDirectories = new Set([".git", "build", "dist", "node_modules"]);
 const requiredFiles = [
   "AGENTS.md",
   "README.md",

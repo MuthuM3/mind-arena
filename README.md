@@ -56,8 +56,3 @@ Start with:
 5. [System architecture](docs/architecture/system-architecture.md)
 6. [Validation plan](docs/research/validation-plan.md)
 7. [Age-adaptive foundation](docs/product/age-adaptive-experience.md)
-8. [Automation runbook](docs/automation/README.md)
-
-Agentflow/Antigravity is configured for bounded implementation tasks. Product-authority, safety,
-privacy, decision, and automation-configuration files are protected from implementation-agent
-changes.
