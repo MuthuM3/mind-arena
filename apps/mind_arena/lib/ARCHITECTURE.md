@@ -1,8 +1,9 @@
 # Frontend module ownership
 
 This Flutter package follows the repository's frontend architecture guide. The directories below
-are ownership boundaries, not independent packages. They remain intentionally empty until an
-approved M1.5 increment needs them.
+are ownership boundaries, not independent packages. Boundary README files exist so Git preserves
+the structure and contributors can locate ownership before implementation. Dart files are added
+only when an approved M1.5 slice needs them.
 
 | Directory | Owns | Must not own |
 |---|---|---|
@@ -19,13 +20,18 @@ approved M1.5 increment needs them.
 | `testing/` | shared test support | production behavior |
 | `shared/` | explicit errors, results, and privacy-safe logging | generic `utils` dumping ground |
 
+Bundled visual, audio, motion, and font files live in the package-level `assets/` directory rather
+than inside `lib/`. They are registered in `pubspec.yaml` only when an approved design artifact and
+performance budget require them.
+
 Dependencies point inward: presentation and scenes may depend on experience and domain contracts;
 domain must not depend on Flutter, data, or presentation. Concrete repositories are selected at the
 bootstrap boundary. New package boundaries require evidence from a second use case or ownership
 pressure.
 
 No Today’s Arena scene, repository, component, design token, fixture, or product behavior is part
-of this setup commit.
+of the foundation. There is no backend workspace, API client, database, cloud SDK, or live AI
+integration. Those require a separately approved connected milestone.
 
 ## Day-one adaptive and performance boundary
 

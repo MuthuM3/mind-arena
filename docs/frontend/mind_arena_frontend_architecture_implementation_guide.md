@@ -589,7 +589,6 @@ lib/
 │   ├── repositories/
 │   └── mappers/
 │
-├── assets/
 ├── accessibility/
 ├── analytics/
 ├── offline/
@@ -599,6 +598,9 @@ lib/
     ├── result/
     └── logging/
 ```
+
+Bundled fonts, images, audio, and animation live in the package-level `assets/` directory outside
+`lib/`; Dart ownership boundaries remain under `lib/`.
 
 There should be no generic dumping ground named `screens`, `services`, or `utils` containing unrelated responsibilities.
 
