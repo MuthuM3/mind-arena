@@ -18,12 +18,16 @@ class InvitationScene extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: MindColors.canvasBase,
-      body: SafeArea(
-        child: ResponsiveLayout(
-          compact: (context) => _buildCompactLayout(context, ref),
-          medium: (context) => _buildMediumLayout(context, ref),
-          expanded: (context) => _buildExpandedLayout(context, ref),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: MindColors.cosmicRadialBackground,
+        ),
+        child: SafeArea(
+          child: ResponsiveLayout(
+            compact: (context) => _buildCompactLayout(context, ref),
+            medium: (context) => _buildMediumLayout(context, ref),
+            expanded: (context) => _buildExpandedLayout(context, ref),
+          ),
         ),
       ),
     );
@@ -50,7 +54,7 @@ class InvitationScene extends ConsumerWidget {
   Widget _buildMediumLayout(BuildContext context, WidgetRef ref) {
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 720.0),
+        constraints: const BoxConstraints(maxWidth: 760.0),
         child: Padding(
           padding: MindSpacing.edgeInsetsFor(MediaQuery.sizeOf(context).width),
           child: SingleChildScrollView(
@@ -82,7 +86,7 @@ class InvitationScene extends ConsumerWidget {
   Widget _buildExpandedLayout(BuildContext context, WidgetRef ref) {
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 1080.0),
+        constraints: const BoxConstraints(maxWidth: 1140.0),
         child: Padding(
           padding: MindSpacing.edgeInsetsFor(MediaQuery.sizeOf(context).width),
           child: SingleChildScrollView(
@@ -119,17 +123,31 @@ class InvitationScene extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Semantics(
-          header: true,
-          child: Text(
-            'Today’s Arena',
-            style: MindTypography.supporting(
-              context,
-              color: MindColors.actionPrimary,
-            ).copyWith(fontWeight: FontWeight.w700),
+        Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: MindSpacing.space12,
+            vertical: MindSpacing.space4,
+          ),
+          decoration: BoxDecoration(
+            color: MindColors.actionPrimary.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(MindSpacing.radiusPill),
+            border: Border.all(
+              color: MindColors.actionPrimary.withValues(alpha: 0.4),
+              width: 1.0,
+            ),
+          ),
+          child: Semantics(
+            header: true,
+            child: Text(
+              'Today’s Arena',
+              style: MindTypography.supporting(
+                context,
+                color: MindColors.actionPrimary,
+              ).copyWith(fontWeight: FontWeight.w700, fontSize: 12.0),
+            ),
           ),
         ),
-        const SizedBox(height: MindSpacing.space8),
+        const SizedBox(height: MindSpacing.space12),
         Focus(
           autofocus: true,
           child: Text(package.title, style: MindTypography.display(context)),
@@ -142,9 +160,16 @@ class InvitationScene extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(MindSpacing.space24),
       decoration: BoxDecoration(
-        color: MindColors.surfaceDefault,
+        color: MindColors.surfaceDefault.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(MindSpacing.radiusCardExpanded),
         border: Border.all(color: MindColors.borderQuiet),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.3),
+            blurRadius: 16.0,
+            offset: const Offset(0, 6),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +187,7 @@ class InvitationScene extends ConsumerWidget {
             style: MindTypography.body(
               context,
               color: MindColors.textSecondary,
-            ),
+            ).copyWith(height: 1.5),
           ),
         ],
       ),
@@ -173,9 +198,16 @@ class InvitationScene extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(MindSpacing.space24),
       decoration: BoxDecoration(
-        color: MindColors.surfaceEmphasis,
+        color: MindColors.surfaceEmphasis.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(MindSpacing.radiusCardExpanded),
         border: Border.all(color: MindColors.borderQuiet),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.2),
+            blurRadius: 12.0,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,43 +216,71 @@ class InvitationScene extends ConsumerWidget {
             'How Today’s Arena Works',
             style: MindTypography.cardTitle(context),
           ),
-          const SizedBox(height: MindSpacing.space16),
+          const SizedBox(height: MindSpacing.space24),
           _buildPoint(
             context,
             '1. Consider the situation',
             'Read the 6 roles and immutable facts.',
+            Icons.explore_outlined,
           ),
-          const SizedBox(height: MindSpacing.space12),
+          const SizedBox(height: MindSpacing.space16),
           _buildPoint(
             context,
             '2. Commit privately',
             'Make your 3-seat decision before seeing others.',
+            Icons.lock_outline_rounded,
           ),
-          const SizedBox(height: MindSpacing.space12),
+          const SizedBox(height: MindSpacing.space16),
           _buildPoint(
             context,
             '3. Encounter real minds',
             'Engage with perspectives authored by real adults.',
+            Icons.people_outline_rounded,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildPoint(BuildContext context, String title, String detail) {
-    return Column(
+  Widget _buildPoint(
+    BuildContext context,
+    String title,
+    String detail,
+    IconData icon,
+  ) {
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: MindTypography.label(context, color: MindColors.actionPrimary),
+        Container(
+          width: 32.0,
+          height: 32.0,
+          decoration: BoxDecoration(
+            color: MindColors.actionPrimary.withValues(alpha: 0.12),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(icon, size: 16.0, color: MindColors.actionPrimary),
         ),
-        const SizedBox(height: MindSpacing.space4),
-        Text(
-          detail,
-          style: MindTypography.supporting(
-            context,
-            color: MindColors.textSecondary,
+        const SizedBox(width: MindSpacing.space12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: MindTypography.label(
+                  context,
+                  color: MindColors.actionPrimary,
+                ),
+              ),
+              const SizedBox(height: MindSpacing.space4),
+              Text(
+                detail,
+                style: MindTypography.supporting(
+                  context,
+                  color: MindColors.textSecondary,
+                ),
+              ),
+            ],
           ),
         ),
       ],

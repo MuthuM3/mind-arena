@@ -25,45 +25,56 @@ class SituationScene extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: MindColors.canvasBase,
-      body: SafeArea(
-        child: Column(
-          children: [
-            const ArenaHeader(stageTitle: 'Situation Reveal'),
-            Expanded(
-              child: Stack(
-                children: [
-                  ResponsiveLayout(
-                    compact: (context) => _buildCompactLayout(context, ref),
-                    medium: (context) => _buildMediumLayout(context, ref),
-                    expanded: (context) => _buildExpandedLayout(context, ref),
-                  ),
-                  if (isFactsPanelOpen)
-                    Positioned.fill(
-                      child: Container(
-                        color: MindColors.canvasBase.withValues(alpha: 0.85),
-                        padding: const EdgeInsets.all(MindSpacing.space24),
-                        child: Center(
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 640.0),
-                            child: SituationFactsPanel(
-                              facts: package.facts,
-                              onClose: () {
-                                ref
-                                    .read(
-                                      arenaSessionControllerProvider.notifier,
-                                    )
-                                    .closeFactsPanel();
-                              },
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: MindColors.cosmicRadialBackground,
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              ArenaHeader(
+                stageTitle: 'Situation Reveal',
+                scenarioTitle: package.title,
+                currentStep: 1,
+                totalSteps: 7,
+              ),
+              Expanded(
+                child: Stack(
+                  children: [
+                    ResponsiveLayout(
+                      compact: (context) => _buildCompactLayout(context, ref),
+                      medium: (context) => _buildMediumLayout(context, ref),
+                      expanded: (context) => _buildExpandedLayout(context, ref),
+                    ),
+                    if (isFactsPanelOpen)
+                      Positioned.fill(
+                        child: Container(
+                          color: MindColors.canvasBase.withValues(alpha: 0.85),
+                          padding: const EdgeInsets.all(MindSpacing.space24),
+                          child: Center(
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                maxWidth: 640.0,
+                              ),
+                              child: SituationFactsPanel(
+                                facts: package.facts,
+                                onClose: () {
+                                  ref
+                                      .read(
+                                        arenaSessionControllerProvider.notifier,
+                                      )
+                                      .closeFactsPanel();
+                                },
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -92,7 +103,7 @@ class SituationScene extends ConsumerWidget {
       padding: MindSpacing.edgeInsetsFor(MediaQuery.sizeOf(context).width),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 840.0),
+          constraints: const BoxConstraints(maxWidth: 880.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -113,28 +124,32 @@ class SituationScene extends ConsumerWidget {
   Widget _buildExpandedLayout(BuildContext context, WidgetRef ref) {
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 1140.0),
+        constraints: const BoxConstraints(maxWidth: 1200.0),
         child: Padding(
           padding: MindSpacing.edgeInsetsFor(MediaQuery.sizeOf(context).width),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Left Column: Premise Hero Card & Action Controls
               Expanded(
-                flex: 4,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildPremiseHeader(context),
-                    const SizedBox(height: MindSpacing.space24),
-                    _buildFactsReviewButton(context, ref),
-                    const SizedBox(height: MindSpacing.space32),
-                    _buildTerminalAction(context),
-                  ],
+                flex: 5,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildPremiseHeader(context),
+                      const SizedBox(height: MindSpacing.space24),
+                      _buildFactsReviewButton(context, ref),
+                      const SizedBox(height: MindSpacing.space32),
+                      _buildTerminalAction(context),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(width: MindSpacing.space32),
+              // Right Column: Roles Grid
               Expanded(
-                flex: 6,
+                flex: 7,
                 child: SingleChildScrollView(
                   child: _buildTwoColumnRoles(context, package.roles),
                 ),
@@ -147,41 +162,89 @@ class SituationScene extends ConsumerWidget {
   }
 
   Widget _buildPremiseHeader(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Focus(
-          autofocus: true,
-          child: Text(
-            'One shuttle. Exactly 3 seats. 6 lives.',
-            style: MindTypography.sceneTitle(context),
+    return Container(
+      padding: const EdgeInsets.all(MindSpacing.space24),
+      decoration: BoxDecoration(
+        color: MindColors.surfaceDefault.withValues(alpha: 0.9),
+        borderRadius: BorderRadius.circular(MindSpacing.radiusCardExpanded),
+        border: Border.all(color: MindColors.borderQuiet, width: 1.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.3),
+            blurRadius: 16.0,
+            offset: const Offset(0, 6),
           ),
-        ),
-        const SizedBox(height: MindSpacing.space8),
-        Text(
-          package.premise,
-          style: MindTypography.body(context, color: MindColors.textSecondary),
-        ),
-        const SizedBox(height: MindSpacing.space12),
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: MindSpacing.space12,
-            vertical: MindSpacing.space8,
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 4.0,
+                height: 28.0,
+                decoration: BoxDecoration(
+                  color: MindColors.actionPrimary,
+                  borderRadius: BorderRadius.circular(2.0),
+                ),
+              ),
+              const SizedBox(width: MindSpacing.space12),
+              Expanded(
+                child: Focus(
+                  autofocus: true,
+                  child: Text(
+                    package.stakesLine,
+                    style: MindTypography.sceneTitle(context),
+                  ),
+                ),
+              ),
+            ],
           ),
-          decoration: BoxDecoration(
-            color: MindColors.surfaceEmphasis,
-            borderRadius: BorderRadius.circular(MindSpacing.radiusControl),
-            border: Border.all(color: MindColors.borderQuiet),
-          ),
-          child: Text(
-            'There is no approved correct list.',
-            style: MindTypography.label(
+          const SizedBox(height: MindSpacing.space16),
+          Text(
+            package.premise,
+            style: MindTypography.body(
               context,
-              color: MindColors.worldConsequence,
+              color: MindColors.textSecondary,
+            ).copyWith(height: 1.5),
+          ),
+          const SizedBox(height: MindSpacing.space16),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: MindSpacing.space12,
+              vertical: MindSpacing.space8,
+            ),
+            decoration: BoxDecoration(
+              color: MindColors.worldConsequence.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(MindSpacing.radiusControl),
+              border: Border.all(
+                color: MindColors.worldConsequence.withValues(alpha: 0.5),
+                width: 1.0,
+              ),
+            ),
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: MindSpacing.space8,
+              children: [
+                const Icon(
+                  Icons.info_outline_rounded,
+                  size: 16.0,
+                  color: MindColors.worldConsequence,
+                ),
+                Text(
+                  'There is no approved correct list.',
+                  style: MindTypography.label(
+                    context,
+                    color: MindColors.worldConsequence,
+                  ).copyWith(fontWeight: FontWeight.w600),
+                ),
+              ],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -246,13 +309,24 @@ class SituationScene extends ConsumerWidget {
             );
           },
         ),
-        const SizedBox(height: MindSpacing.space8),
-        Text(
-          'M1.5 Slice 01 Preview Boundary',
-          style: MindTypography.supporting(
-            context,
-            color: MindColors.textMuted,
-          ),
+        const SizedBox(height: MindSpacing.space12),
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: MindSpacing.space4,
+          children: [
+            const Icon(
+              Icons.verified_outlined,
+              size: 14.0,
+              color: MindColors.textMuted,
+            ),
+            Text(
+              'M1.5 Slice 01 Preview Boundary',
+              style: MindTypography.supporting(
+                context,
+                color: MindColors.textMuted,
+              ),
+            ),
+          ],
         ),
       ],
     );

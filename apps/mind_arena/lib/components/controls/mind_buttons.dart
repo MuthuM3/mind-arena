@@ -4,7 +4,7 @@ import 'package:mind_arena/design/tokens/mind_spacing.dart';
 import 'package:mind_arena/design/typography/mind_typography.dart';
 
 /// Primary action button for Quiet Orbit design system.
-/// Implements 48px minimum touch target, visible focus ring, and single keyboard stop.
+/// Implements 48px minimum touch target, glowing cyan shadow, and visible focus ring.
 class PrimaryActionButton extends StatefulWidget {
   const PrimaryActionButton({
     super.key,
@@ -25,15 +25,15 @@ class PrimaryActionButton extends StatefulWidget {
 
 class _PrimaryActionButtonState extends State<PrimaryActionButton> {
   bool _isFocused = false;
+  bool _isHovered = false;
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minHeight: MindSpacing.space48,
-        minWidth: 120.0,
-      ),
-      child: Container(
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 160),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(MindSpacing.radiusControl),
           border: _isFocused
@@ -42,6 +42,16 @@ class _PrimaryActionButtonState extends State<PrimaryActionButton> {
                   width: MindSpacing.focusRingWidth,
                 )
               : null,
+          boxShadow: [
+            if (widget.onPressed != null)
+              BoxShadow(
+                color: MindColors.actionPrimary.withValues(
+                  alpha: _isHovered || _isFocused ? 0.45 : 0.2,
+                ),
+                blurRadius: _isHovered || _isFocused ? 16.0 : 8.0,
+                offset: const Offset(0, 4),
+              ),
+          ],
         ),
         padding: EdgeInsets.all(_isFocused ? MindSpacing.focusRingOffset : 0),
         child: ElevatedButton(
@@ -54,11 +64,17 @@ class _PrimaryActionButtonState extends State<PrimaryActionButton> {
           },
           onPressed: widget.onPressed,
           style: ElevatedButton.styleFrom(
-            backgroundColor: MindColors.actionPrimary,
+            backgroundColor: _isHovered
+                ? MindColors.actionPrimaryHover
+                : MindColors.actionPrimary,
             foregroundColor: MindColors.canvasBase,
             disabledBackgroundColor: MindColors.borderQuiet,
             disabledForegroundColor: MindColors.textMuted,
             minimumSize: const Size(120.0, MindSpacing.space48),
+            padding: const EdgeInsets.symmetric(
+              horizontal: MindSpacing.space24,
+              vertical: MindSpacing.space12,
+            ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(MindSpacing.radiusControl),
             ),
@@ -66,7 +82,10 @@ class _PrimaryActionButtonState extends State<PrimaryActionButton> {
           ),
           child: Text(
             widget.label,
-            style: MindTypography.label(context, color: MindColors.canvasBase),
+            style: MindTypography.label(
+              context,
+              color: MindColors.canvasBase,
+            ).copyWith(fontWeight: FontWeight.w700, letterSpacing: 0.2),
             textAlign: TextAlign.center,
           ),
         ),
@@ -96,15 +115,15 @@ class SecondaryActionButton extends StatefulWidget {
 
 class _SecondaryActionButtonState extends State<SecondaryActionButton> {
   bool _isFocused = false;
+  bool _isHovered = false;
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minHeight: MindSpacing.space48,
-        minWidth: 100.0,
-      ),
-      child: Container(
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 160),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(MindSpacing.radiusControl),
           border: _isFocused
@@ -125,17 +144,33 @@ class _SecondaryActionButtonState extends State<SecondaryActionButton> {
           },
           onPressed: widget.onPressed,
           style: OutlinedButton.styleFrom(
-            backgroundColor: MindColors.surfaceDefault,
+            backgroundColor: _isHovered
+                ? MindColors.surfaceEmphasis
+                : MindColors.surfaceDefault,
             foregroundColor: MindColors.textPrimary,
-            side: const BorderSide(color: MindColors.borderQuiet),
+            side: BorderSide(
+              color: _isHovered
+                  ? MindColors.actionPrimary
+                  : MindColors.borderQuiet,
+              width: 1.0,
+            ),
             minimumSize: const Size(100.0, MindSpacing.space48),
+            padding: const EdgeInsets.symmetric(
+              horizontal: MindSpacing.space16,
+              vertical: MindSpacing.space12,
+            ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(MindSpacing.radiusControl),
             ),
           ),
           child: Text(
             widget.label,
-            style: MindTypography.label(context, color: MindColors.textPrimary),
+            style: MindTypography.label(
+              context,
+              color: _isHovered
+                  ? MindColors.actionPrimary
+                  : MindColors.textPrimary,
+            ),
             textAlign: TextAlign.center,
           ),
         ),
