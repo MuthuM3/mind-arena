@@ -7,6 +7,7 @@ from replaceable technical choices.
 
 - [Vision and strategy](product/vision.md)
 - [V1 Today’s Arena requirements](product/v1-product-requirements.md)
+- [Real Perspective Provenance Plan](product/real-perspective-provenance-plan.md)
 - [Market and positioning](product/market-and-positioning.md)
 - [Experience and design language](product/experience-design.md)
 - [Arena Engine and product formats](product/arena-engine-and-formats.md)
@@ -27,12 +28,17 @@ from replaceable technical choices.
 - [Adaptive client and performance foundation](architecture/adaptive-client-and-performance.md)
 - [Hybrid AI facilitation](architecture/hybrid-ai-facilitation.md)
 - [Frontend architecture and implementation guide](frontend/mind_arena_frontend_architecture_implementation_guide.md)
+- [Mind Design Bible](frontend/mind-design-bible.md)
+- [Today’s Arena storyboards](frontend/todays-arena-storyboards.md)
 
 ## Execution
 
+- [Codex–Antigravity planning and delivery protocol](operations/codex-antigravity-delivery-protocol.md)
 - [Product execution program](status/product-execution-program.md)
 - [Implementation readiness ledger](status/implementation-readiness.md)
 - [Validation plan](research/validation-plan.md)
+- [M1.5 research protocol](research/m1.5-research-protocol.md)
+- [M1.5 Slice 01 implementation packet](implementation/m1.5-slice-01-invitation-and-situation.md)
 - [Decision framework](operations/decision-framework.md)
 - [Risk register](operations/risk-register.md)
 
@@ -47,6 +53,7 @@ from replaceable technical choices.
 - [ADR-0006: Age-adaptive foundation with adult-only V1](decisions/0006-age-adaptive-foundation.md)
 - [ADR-0007: Adaptive cross-platform client and service boundaries](decisions/0007-adaptive-cross-platform-client-and-service-boundaries.md)
 - [ADR-0008: Bounded hybrid AI facilitation](decisions/0008-bounded-hybrid-ai-facilitation.md)
+- [EDR-0001: Slice 01 design evidence](decisions/edr-0001-slice-01-design-evidence.md)
 
 The product vision and V1 PRD are authority. Architecture describes the minimum route to the current
 product, not permission to build every future capability. The execution program is the active scope

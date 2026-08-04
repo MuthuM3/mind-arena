@@ -51,6 +51,12 @@ Record durable changes to product scope or architecture under `docs/decisions/`.
 
 ## Delivery rules
 
+- Follow the staged Codex–Antigravity workflow in
+  `docs/operations/codex-antigravity-delivery-protocol.md` for every implementation checkpoint.
+- Codex plans and independently verifies; Antigravity implements only the approved checkpoint; the
+  human product owner authorizes implementation, commits, milestone freezes, and releases.
+- Do not treat an implementation report, walkthrough, screenshot, or passing test count as approval.
+  Approval requires Codex review of the repository, assertions, executed gates, and required evidence.
 - Work on one user-observable vertical slice at a time.
 - Validate the human interaction before automating it with AI.
 - Do not add a service, database, queue, model, or abstraction without a current milestone need.

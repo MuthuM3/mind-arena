@@ -1,6 +1,6 @@
 # Arena Content Bible: Content and Facilitation System
 
-**Status:** Draft complete; product-owner approval pending
+**Status:** Approved for M1.5
 
 **Version:** 1.0
 

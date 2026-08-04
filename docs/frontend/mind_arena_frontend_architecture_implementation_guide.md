@@ -1,9 +1,9 @@
 # Mind Arena — Frontend Architecture & Implementation Guide
 
-> **Version:** 1.1
+> **Version:** 1.2
 > **Status:** Active frontend source of truth
-> **Current milestone:** M1.4 — Experience Design
-> **Next milestone:** M1.5 — Experience Prototype
+> **Current milestone:** M1.5 — Slice 01 authorized
+> **Next milestone:** M1.5 — Complete Experience Prototype
 > **Target stack:** Flutter for mobile, tablet, laptop, web, and desktop
 > **Implementation strategy:** Experience design first, mock platform second, backend later
 > **Core rule:** The frontend must behave like a complete product before it connects to production services.
@@ -353,6 +353,10 @@ To prevent infinite design iteration, M1.4 is bound by strict limits:
 - **1** experience-review approval cycle before implementation
 
 Anything beyond these bounds must be logged in the Design Bible backlog for post-M1.5 refinement.
+
+[EDR-0001](../decisions/edr-0001-slice-01-design-evidence.md) authorizes the bounded TA-01/TA-02
+implementation from the approved Design Bible and responsive storyboards. The complete-flow motion
+study remains required before TA-03 through TA-07 implementation; it is not silently waived.
 
 ### Success Criteria
 
@@ -3242,30 +3246,33 @@ You are cleared to begin work on:
 
 - [x] Experience Manifesto
 - [x] Primary-user definition
-- [ ] Mind Design Bible
-- [ ] Arena Content Bible
+- [x] Mind Design Bible
+- [x] Arena Content Bible
 - [ ] Mars Rescue real-perspective collection
-- [ ] Emotional timeline
-- [ ] Scene storyboards (TA-01 through TA-07)
-- [ ] Research planning & protocol
+- [x] Emotional timeline
+- [x] Scene storyboards (TA-01 through TA-07)
+- [x] Research planning & protocol
 
-### Not Ready Yet (Gate Before Full Flutter Vertical Slice)
+### Approved Foundation (Incremental Flutter Implementation May Begin)
 
-Do **NOT** begin the full Flutter vertical slice implementation until these 9 foundational artifacts are approved:
+The nine foundational artifacts required before Flutter product implementation are approved:
 
 | Artifact Gate | Approval Status |
 | :--- | :---: |
 | 1. Primary M1.5 User Definition | Approved |
 | 2. Product Hypothesis & Thresholds | Approved |
-| 3. Real Perspective Provenance Plan | Pending M1.4 |
-| 4. Arena Content Bible | Draft complete; approval pending |
-| 5. Mind Design Bible | Pending M1.4 |
-| 6. Seven Scene Storyboards (TA-01 to TA-07) | Pending M1.4 |
-| 7. M1.5 Research Protocol & Script | Pending M1.4 |
+| 3. Real Perspective Provenance Plan | Approved |
+| 4. Arena Content Bible | Approved |
+| 5. Mind Design Bible | Approved |
+| 6. Seven Scene Storyboards (TA-01 to TA-07) | Approved |
+| 7. M1.5 Research Protocol & Script | Approved |
 | 8. Primary Platform Certification Decision | Approved |
 | 9. M1.4 Timebox & Stop Rule Agreement | Approved |
 
-Once these nine items exist and are formally signed off, full Flutter vertical slice implementation begins.
+Implementation proceeds one approved user-observable slice at a time. Slice 01 is governed by
+`docs/implementation/m1.5-slice-01-invitation-and-situation.md`. Real-perspective collection remains
+an operational requirement before human cards can be used in research; it does not authorize
+fabricated fixtures or block TA-01 and TA-02 implementation.
 
 ---
 

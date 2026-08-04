@@ -44,8 +44,10 @@ unsafe random matching, and real-time infrastructure before the interaction is p
 
 ## Current phase
 
-The future-aligned product foundation is complete. The next milestone is an experience proof: script
-and test the first story-driven Today’s Arena before production implementation begins.
+The product and frontend foundations are approved for incremental M1.5 implementation. The active
+packet is the backend-free, live-AI-free
+[Today’s Arena Invitation and Situation slice](docs/implementation/m1.5-slice-01-invitation-and-situation.md).
+Implementation must stop at TA-02 for independent review before later scenes begin.
 
 Start with:
 
