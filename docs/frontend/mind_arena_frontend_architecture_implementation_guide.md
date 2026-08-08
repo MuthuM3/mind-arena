@@ -33,7 +33,7 @@ The document covers the complete frontend journey from the first product-languag
 
 ## 2. Document System
 
-Mind Arena uses a three-part complementary source-of-truth document system.
+Mind Arena uses a complementary source-of-truth document system. Implementation-facing experience specifications are organized in `docs/experience/` to prepare scene-level details before Flutter development.
 
 ```text
 Frontend Architecture Guide
@@ -45,6 +45,16 @@ Mind Design Bible
 Arena Content Bible
         → How situations, perspectives, prompts, and reflections are created
 ```
+
+See implementation-facing workspace:
+- [Experience Manifesto](../experience/experience-manifesto.md)
+- [Primary M1.5 User](../experience/primary-user.md)
+- [Product Hypothesis](../experience/product-hypothesis.md)
+- [Mind Design Bible Specification](../experience/mind-design-bible.md)
+- [Arena Content Bible Specification](../experience/arena-content-bible.md)
+- [M1.5 Research Plan](../experience/research-plan.md)
+- [Experience Decision Records](../experience/decisions/README.md)
+- [Scene Specifications](../experience/scenes/README.md)
 
 ### 2.1 Component Document Roles
 

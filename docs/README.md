@@ -13,6 +13,17 @@ from replaceable technical choices.
 - [Arena Engine and product formats](product/arena-engine-and-formats.md)
 - [Age-adaptive experience and safeguarding](product/age-adaptive-experience.md)
 
+## Experience Workspace
+
+- [Experience Manifesto](./experience/experience-manifesto.md)
+- [Primary M1.5 User](./experience/primary-user.md)
+- [Product Hypothesis](./experience/product-hypothesis.md)
+- [Mind Design Bible](./experience/mind-design-bible.md)
+- [Arena Content Bible](./experience/arena-content-bible.md)
+- [M1.5 Research Plan](./experience/research-plan.md)
+- [Experience Decision Records](./experience/decisions/README.md)
+- [Scene Specifications](./experience/scenes/README.md)
+
 ## Product systems
 
 - [Arena Content Bible and facilitation system](product/content-and-facilitation.md)
