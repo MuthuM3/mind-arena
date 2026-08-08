@@ -1,53 +1,84 @@
 # Primary M1.5 User
 
-## Who They Are
+## Purpose
 
-An adult individual seeking structured, meaningful reflection on complex human situations during short breaks in their day.
+This document defines the primary validation user for Mind Arena M1.5. It specifies behavioral qualification signals, context, alternatives, accessibility needs, and cohort eligibility rules without inventing demographic attributes.
 
-## Current Behavior
+## Authority and Derivation
 
-Currently spends short breaks scrolling social media feeds, reading news comment sections, completing quick daily puzzle games, or reflecting silently without structured external inputs.
+Documents in `docs/experience/` organize implementation-facing experience specifications. They do not supersede existing approved authority documents.
 
-## Current Problem
+This specification is derived from and grounded in:
+- [`docs/product/vision.md`](../product/vision.md)
+- [`docs/product/v1-product-requirements.md`](../product/v1-product-requirements.md)
+- [`docs/research/m1.5-research-protocol.md`](../research/m1.5-research-protocol.md)
 
-Frustrated by online polarization, comment section noise, toxic debate, superficial surveys, and mindless doomscrolling; lacks a calm, structured environment for genuine perspective-taking.
+When content conflicts, repository authority documents prevail.
 
-## Trigger to Open Mind Arena
+## Behavioral Qualification Signals
 
-A daily break (e.g., morning coffee, commute pause, midday transition) when they want a short, high-quality intellectual reset rather than passive scrolling.
+The M1.5 primary user is qualified by observable behaviors rather than demographic categories:
 
-## What They Want From 3 Minutes
+- **Break-time reflection seeking:** Spends short daily breaks (3–5 minutes) reading news, scrolling feeds, solving daily puzzles, or reflecting silently.
+- **Noise frustration:** Expresses dissatisfaction with outrage-driven comment sections, toxic debate, superficial surveys, and AI-generated opinions.
+- **Stance ownership:** Willing to state an independent viewpoint privately and explain their reasoning concisely (10–50 words).
+- **Perspective curiosity:** Interested in discovering how other adults reason through complex human trade-offs without needing a winner or score.
 
-A focused, complete experience where they can evaluate a tough choice, state their view without performative pressure, encounter surprising alternative perspectives, and leave with clearer thinking.
+## Current Alternatives and Switching Triggers
 
-## What Existing Products Do Poorly
+- **Current alternatives:** News comment sections, social media feeds, online discussion forums, opinion polls, daily puzzle games, AI chatbots.
+- **Switching triggers:** Encountering polarization, outrage loops, performative comment battles, or artificial bot replies during short daily breaks when seeking a calm, thoughtful reset.
 
-- **Social platforms:** Reward outrage, viral popularity, comment combat, and rapid reactive replies.
-- **Polls and survey tools:** Aggregate raw percentages without revealing underlying human reasoning.
-- **Debate forums:** Turn discussions into win/lose arguments with heavy confirmation bias.
-- **Chatbots:** Provide AI-generated opinions rather than authentic human perspectives.
+## Suitable Three-Minute Usage Contexts
 
-## What Success Feels Like
+- Morning coffee or tea break.
+- Commute pause or transit transition.
+- Midday work break transition.
+- Evening wind-down pause.
 
-"I never thought about it that way." They feel respected, calm, mentally engaged, and surprised by a perspective from another real person.
+The context must fit an asynchronous, approximately three-minute shared reflection challenge.
 
-## Why They Return Tomorrow
+## Accessibility and Input Diversity
 
-The daily promise of one high-quality, story-driven, three-minute shared challenge that reliably offers fresh perspective without social stress.
+The primary user profile spans diverse interaction modes and accessibility preferences:
+
+- **Device viewports:** Mobile-first (compact <600px), tablet (medium 600–1023px), laptop/desktop (expanded >=1024px).
+- **Input methods:** Touch, keyboard navigation, pointer.
+- **Accessibility settings:** Screen reader semantics, 200% system text scaling, reduced motion preferences.
+
+## Research-Cohort Eligibility
+
+Participants in M1.5 validation cohorts must meet the following eligibility criteria per [`docs/research/m1.5-research-protocol.md`](../research/m1.5-research-protocol.md):
+
+- Adult status confirmed (age 18 or older).
+- Comfortable reading and typing short English responses for this version.
+- Research participation consent confirmed.
+- Separate perspective-pool consent understood and evaluated in TA-03.
+- *Author exclusion boundary:* Individuals directly involved in authoring the Mars Rescue scenario package are excluded only from primary comprehension measures (Round A gate), not from all M1.5 validation activities.
+
+## Explicit Exclusion Criteria
+
+The following are explicitly excluded from M1.5 validation cohorts:
+
+- Minors (under age 18) — adult and minor social pools remain structurally isolated.
+- Unverified age or unknown eligibility status.
+- Deferred product use cases: corporate collaboration, classroom use, long debates, professional coaching, multiplayer rooms, and team brainstorming.
+
+## Non-Primary Audience (Not Excluded from Research)
+
+- Performative debate seekers looking for win/lose arguments, public follower graphs, or leaderboards represent a non-primary product audience.
+- They are **not** excluded from research testing; including diverse perspectives in research prevents validation bias while evaluating whether the product contract effectively deters combativeness.
 
 ## Persona Precision
 
 M1.5 defines the primary user behaviorally rather than through invented demographic attributes.
 
-Unvalidated details such as exact age range, profession, income, geography, and lifestyle remain OPEN until supported by research.
+Unvalidated details such as exact age range, profession, income, geography, and lifestyle remain OPEN until supported by research evidence.
 
-## Not Our Primary User Yet
+## Definition Revision Triggers
 
-The following use cases and audiences are explicitly deferred beyond M1.5:
+The primary user definition will be revised or re-scoped if research evidence shows:
 
-- Corporate collaboration
-- Classroom use
-- Long debates
-- Professional coaching
-- Multiplayer rooms
-- Team brainstorming
+- Target adults routinely treat the dilemma as a trivia game or test to be "won".
+- Participants prefer unmoderated freeform chat or solo AI summaries over structured human perspective exchange.
+- Target adults find the 3-minute structured flow tedious or indistinguishable from standard polls.
