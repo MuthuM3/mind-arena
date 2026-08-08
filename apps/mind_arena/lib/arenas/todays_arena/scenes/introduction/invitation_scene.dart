@@ -17,6 +17,8 @@ class InvitationScene extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final scrollController = PrimaryScrollController.of(context);
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -24,17 +26,25 @@ class InvitationScene extends ConsumerWidget {
         ),
         child: SafeArea(
           child: ResponsiveLayout(
-            compact: (context) => _buildCompactLayout(context, ref),
-            medium: (context) => _buildMediumLayout(context, ref),
-            expanded: (context) => _buildExpandedLayout(context, ref),
+            compact: (context) =>
+                _buildCompactLayout(context, ref, scrollController),
+            medium: (context) =>
+                _buildMediumLayout(context, ref, scrollController),
+            expanded: (context) =>
+                _buildExpandedLayout(context, ref, scrollController),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildCompactLayout(BuildContext context, WidgetRef ref) {
+  Widget _buildCompactLayout(
+    BuildContext context,
+    WidgetRef ref,
+    ScrollController scrollController,
+  ) {
     return SingleChildScrollView(
+      controller: scrollController,
       padding: MindSpacing.edgeInsetsFor(MediaQuery.sizeOf(context).width),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,19 +55,24 @@ class InvitationScene extends ConsumerWidget {
           const SizedBox(height: MindSpacing.space24),
           _buildTrustBadges(context),
           const SizedBox(height: MindSpacing.space32),
-          _buildEnterButton(context, ref),
+          _buildActionButtons(context, ref),
         ],
       ),
     );
   }
 
-  Widget _buildMediumLayout(BuildContext context, WidgetRef ref) {
+  Widget _buildMediumLayout(
+    BuildContext context,
+    WidgetRef ref,
+    ScrollController scrollController,
+  ) {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 760.0),
         child: Padding(
           padding: MindSpacing.edgeInsetsFor(MediaQuery.sizeOf(context).width),
           child: SingleChildScrollView(
+            controller: scrollController,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -74,7 +89,7 @@ class InvitationScene extends ConsumerWidget {
                 const SizedBox(height: MindSpacing.space32),
                 _buildTrustBadges(context),
                 const SizedBox(height: MindSpacing.space32),
-                _buildEnterButton(context, ref),
+                _buildActionButtons(context, ref),
               ],
             ),
           ),
@@ -83,13 +98,18 @@ class InvitationScene extends ConsumerWidget {
     );
   }
 
-  Widget _buildExpandedLayout(BuildContext context, WidgetRef ref) {
+  Widget _buildExpandedLayout(
+    BuildContext context,
+    WidgetRef ref,
+    ScrollController scrollController,
+  ) {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1140.0),
         child: Padding(
           padding: MindSpacing.edgeInsetsFor(MediaQuery.sizeOf(context).width),
           child: SingleChildScrollView(
+            controller: scrollController,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -105,7 +125,7 @@ class InvitationScene extends ConsumerWidget {
                       const SizedBox(height: MindSpacing.space32),
                       _buildTrustBadges(context),
                       const SizedBox(height: MindSpacing.space32),
-                      _buildEnterButton(context, ref),
+                      _buildActionButtons(context, ref),
                     ],
                   ),
                 ),
@@ -293,7 +313,7 @@ class InvitationScene extends ConsumerWidget {
       runSpacing: MindSpacing.space8,
       children: [
         ProvenanceBadge(
-          label: 'Shared with real people · Not live',
+          label: package.socialTruthLabel,
           color: MindColors.humanPrimary,
         ),
         ProvenanceBadge(
@@ -309,15 +329,36 @@ class InvitationScene extends ConsumerWidget {
     );
   }
 
-  Widget _buildEnterButton(BuildContext context, WidgetRef ref) {
-    return SizedBox(
-      width: double.infinity,
-      child: PrimaryActionButton(
-        label: 'Enter arena',
-        onPressed: () {
-          ref.read(arenaSessionControllerProvider.notifier).enterSituation();
-        },
-      ),
+  Widget _buildActionButtons(BuildContext context, WidgetRef ref) {
+    return Row(
+      children: [
+        Expanded(
+          child: PrimaryActionButton(
+            label: 'Enter arena',
+            onPressed: () {
+              ref
+                  .read(arenaSessionControllerProvider.notifier)
+                  .enterSituation();
+            },
+          ),
+        ),
+        const SizedBox(width: MindSpacing.space12),
+        SecondaryActionButton(
+          label: 'Leave arena',
+          onPressed: () {
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Left arena session.'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            }
+          },
+        ),
+      ],
     );
   }
 }

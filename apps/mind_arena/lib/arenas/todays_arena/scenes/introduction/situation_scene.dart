@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mind_arena/components/arena/arena_header.dart';
@@ -22,8 +23,26 @@ class SituationScene extends ConsumerWidget {
   final MarsRescuePackage package;
   final bool isFactsPanelOpen;
 
+  void _handleLeave(BuildContext context, WidgetRef ref) {
+    unawaited(
+      ref.read(arenaSessionControllerProvider.notifier).loadInvitation(),
+    );
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Left arena session.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final scrollController = PrimaryScrollController.of(context);
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -35,16 +54,20 @@ class SituationScene extends ConsumerWidget {
               ArenaHeader(
                 stageTitle: 'Situation Reveal',
                 scenarioTitle: package.title,
-                currentStep: 1,
+                currentStep: 2,
                 totalSteps: 7,
+                onExit: () => _handleLeave(context, ref),
               ),
               Expanded(
                 child: Stack(
                   children: [
                     ResponsiveLayout(
-                      compact: (context) => _buildCompactLayout(context, ref),
-                      medium: (context) => _buildMediumLayout(context, ref),
-                      expanded: (context) => _buildExpandedLayout(context, ref),
+                      compact: (context) =>
+                          _buildCompactLayout(context, ref, scrollController),
+                      medium: (context) =>
+                          _buildMediumLayout(context, ref, scrollController),
+                      expanded: (context) =>
+                          _buildExpandedLayout(context, ref, scrollController),
                     ),
                     if (isFactsPanelOpen)
                       Positioned.fill(
@@ -80,8 +103,13 @@ class SituationScene extends ConsumerWidget {
     );
   }
 
-  Widget _buildCompactLayout(BuildContext context, WidgetRef ref) {
+  Widget _buildCompactLayout(
+    BuildContext context,
+    WidgetRef ref,
+    ScrollController scrollController,
+  ) {
     return SingleChildScrollView(
+      controller: scrollController,
       padding: MindSpacing.edgeInsetsFor(MediaQuery.sizeOf(context).width),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,14 +120,19 @@ class SituationScene extends ConsumerWidget {
           const SizedBox(height: MindSpacing.space24),
           _buildRolesList(context, package.roles),
           const SizedBox(height: MindSpacing.space32),
-          _buildTerminalAction(context),
+          _buildTerminalActions(context, ref),
         ],
       ),
     );
   }
 
-  Widget _buildMediumLayout(BuildContext context, WidgetRef ref) {
+  Widget _buildMediumLayout(
+    BuildContext context,
+    WidgetRef ref,
+    ScrollController scrollController,
+  ) {
     return SingleChildScrollView(
+      controller: scrollController,
       padding: MindSpacing.edgeInsetsFor(MediaQuery.sizeOf(context).width),
       child: Center(
         child: ConstrainedBox(
@@ -113,7 +146,7 @@ class SituationScene extends ConsumerWidget {
               const SizedBox(height: MindSpacing.space24),
               _buildTwoColumnRoles(context, package.roles),
               const SizedBox(height: MindSpacing.space32),
-              _buildTerminalAction(context),
+              _buildTerminalActions(context, ref),
             ],
           ),
         ),
@@ -121,7 +154,11 @@ class SituationScene extends ConsumerWidget {
     );
   }
 
-  Widget _buildExpandedLayout(BuildContext context, WidgetRef ref) {
+  Widget _buildExpandedLayout(
+    BuildContext context,
+    WidgetRef ref,
+    ScrollController scrollController,
+  ) {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1200.0),
@@ -134,6 +171,7 @@ class SituationScene extends ConsumerWidget {
               Expanded(
                 flex: 5,
                 child: SingleChildScrollView(
+                  controller: scrollController,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -141,7 +179,7 @@ class SituationScene extends ConsumerWidget {
                       const SizedBox(height: MindSpacing.space24),
                       _buildFactsReviewButton(context, ref),
                       const SizedBox(height: MindSpacing.space32),
-                      _buildTerminalAction(context),
+                      _buildTerminalActions(context, ref),
                     ],
                   ),
                 ),
@@ -292,22 +330,33 @@ class SituationScene extends ConsumerWidget {
     );
   }
 
-  Widget _buildTerminalAction(BuildContext context) {
+  Widget _buildTerminalActions(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PrimaryActionButton(
-          label: 'I understand the situation',
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(
-                  'Slice 01 Complete: You understand the Mars Rescue situation.',
-                ),
-                duration: Duration(seconds: 3),
+        Row(
+          children: [
+            Expanded(
+              child: PrimaryActionButton(
+                label: 'I understand the situation',
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Slice 01 Complete: You understand the Mars Rescue situation.',
+                      ),
+                      duration: Duration(seconds: 3),
+                    ),
+                  );
+                },
               ),
-            );
-          },
+            ),
+            const SizedBox(width: MindSpacing.space12),
+            SecondaryActionButton(
+              label: 'Leave arena',
+              onPressed: () => _handleLeave(context, ref),
+            ),
+          ],
         ),
         const SizedBox(height: MindSpacing.space12),
         Wrap(

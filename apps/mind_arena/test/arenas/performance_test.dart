@@ -5,6 +5,7 @@ import 'package:mind_arena/app/routing/app_router.dart';
 import 'package:mind_arena/data/local/mars_rescue_local_repository.dart';
 import 'package:mind_arena/design/tokens/mind_colors.dart';
 import 'package:mind_arena/experience/orchestration/arena_session_controller.dart';
+import 'package:mind_arena/experience/state/arena_session_state.dart';
 
 void main() {
   group('Performance & Frame Budget Measurements', () {
@@ -20,7 +21,30 @@ void main() {
       );
     }
 
-    testWidgets('Warm start to usable invitation scene in under 1.0 second', (
+    testWidgets(
+      'Warm start to usable invitation scene in under 1.0 second (<=1000ms)',
+      (tester) async {
+        final stopwatch = Stopwatch()..start();
+
+        final container = ProviderContainer(
+          overrides: [
+            arenaRepositoryProvider.overrideWithValue(
+              const MarsRescueLocalRepository(),
+            ),
+          ],
+        );
+        addTearDown(container.dispose);
+
+        await tester.pumpWidget(buildTestApp(container));
+        await tester.pumpAndSettle();
+        stopwatch.stop();
+
+        expect(find.text('Mars Rescue'), findsOneWidget);
+        expect(stopwatch.elapsedMilliseconds, lessThanOrEqualTo(1000));
+      },
+    );
+
+    testWidgets('Representative cold start under 2.5 seconds (<=2500ms)', (
       tester,
     ) async {
       final stopwatch = Stopwatch()..start();
@@ -39,7 +63,7 @@ void main() {
       stopwatch.stop();
 
       expect(find.text('Mars Rescue'), findsOneWidget);
-      expect(stopwatch.elapsedMilliseconds, lessThan(3000));
+      expect(stopwatch.elapsedMilliseconds, lessThanOrEqualTo(2500));
     });
 
     testWidgets('Input visual response latency under 100ms', (tester) async {
@@ -59,12 +83,15 @@ void main() {
       await tester.pumpWidget(buildTestApp(container));
       await tester.pumpAndSettle();
 
-      final stopwatch = Stopwatch()..start();
-      await tester.tap(find.text('Enter arena'), warnIfMissed: false);
+      final stopwatch = Stopwatch();
+      final enterFinder = find.text('Enter arena');
+      await tester.ensureVisible(enterFinder);
+      await tester.tap(enterFinder);
+      stopwatch.start();
       await tester.pump();
       stopwatch.stop();
 
-      expect(stopwatch.elapsedMilliseconds, lessThan(1000));
+      expect(stopwatch.elapsedMilliseconds, lessThanOrEqualTo(100));
     });
 
     testWidgets('Memory and state stability over 10 repeated session resets', (
@@ -87,6 +114,11 @@ void main() {
             .enterSituation();
         await tester.pumpAndSettle();
 
+        expect(
+          container.read(arenaSessionControllerProvider),
+          isA<ArenaSituationReady>(),
+        );
+
         container
             .read(arenaSessionControllerProvider.notifier)
             .toggleFactsPanel();
@@ -99,8 +131,6 @@ void main() {
 
         container.dispose();
       }
-
-      expect(find.byType(MaterialApp), findsOneWidget);
     });
   });
 }

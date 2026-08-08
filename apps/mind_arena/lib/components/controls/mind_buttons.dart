@@ -4,7 +4,7 @@ import 'package:mind_arena/design/tokens/mind_spacing.dart';
 import 'package:mind_arena/design/typography/mind_typography.dart';
 
 /// Primary action button for Quiet Orbit design system.
-/// Implements 48px minimum touch target, glowing cyan shadow, and visible focus ring.
+/// Implements 48px minimum touch target, glowing cyan shadow, visible focus ring, and reduced-motion compliance.
 class PrimaryActionButton extends StatefulWidget {
   const PrimaryActionButton({
     super.key,
@@ -29,11 +29,16 @@ class _PrimaryActionButtonState extends State<PrimaryActionButton> {
 
   @override
   Widget build(BuildContext context) {
+    final reducedMotion = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final animationDuration = reducedMotion
+        ? Duration.zero
+        : const Duration(milliseconds: 160);
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 160),
+        duration: animationDuration,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(MindSpacing.radiusControl),
           border: _isFocused
@@ -119,11 +124,16 @@ class _SecondaryActionButtonState extends State<SecondaryActionButton> {
 
   @override
   Widget build(BuildContext context) {
+    final reducedMotion = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final animationDuration = reducedMotion
+        ? Duration.zero
+        : const Duration(milliseconds: 160);
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 160),
+        duration: animationDuration,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(MindSpacing.radiusControl),
           border: _isFocused
@@ -154,23 +164,22 @@ class _SecondaryActionButtonState extends State<SecondaryActionButton> {
                   : MindColors.borderQuiet,
               width: 1.0,
             ),
-            minimumSize: const Size(100.0, MindSpacing.space48),
+            minimumSize: const Size(120.0, MindSpacing.space48),
             padding: const EdgeInsets.symmetric(
-              horizontal: MindSpacing.space16,
+              horizontal: MindSpacing.space24,
               vertical: MindSpacing.space12,
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(MindSpacing.radiusControl),
             ),
+            elevation: 0,
           ),
           child: Text(
             widget.label,
             style: MindTypography.label(
               context,
-              color: _isHovered
-                  ? MindColors.actionPrimary
-                  : MindColors.textPrimary,
-            ),
+              color: MindColors.textPrimary,
+            ).copyWith(fontWeight: FontWeight.w600),
             textAlign: TextAlign.center,
           ),
         ),

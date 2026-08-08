@@ -53,6 +53,10 @@ void main() {
 
       expect(find.text('Mars Rescue'), findsOneWidget);
       expect(find.text('Enter arena'), findsOneWidget);
+      await expectLater(
+        find.byType(MaterialApp),
+        matchesGoldenFile('goldens/ta01_compact_portrait.png'),
+      );
     });
 
     testWidgets('TA-01 844x390 Compact Landscape Golden', (tester) async {
@@ -68,6 +72,10 @@ void main() {
 
       expect(find.text('Mars Rescue'), findsOneWidget);
       expect(find.text('Enter arena'), findsOneWidget);
+      await expectLater(
+        find.byType(MaterialApp),
+        matchesGoldenFile('goldens/ta01_compact_landscape.png'),
+      );
     });
 
     testWidgets('TA-01 768x1024 Medium Tablet Golden', (tester) async {
@@ -82,6 +90,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('How Today’s Arena Works'), findsOneWidget);
+      await expectLater(
+        find.byType(MaterialApp),
+        matchesGoldenFile('goldens/ta01_medium_tablet.png'),
+      );
     });
 
     testWidgets('TA-01 1024x768 Expanded Boundary Golden', (tester) async {
@@ -96,6 +108,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('How Today’s Arena Works'), findsOneWidget);
+      await expectLater(
+        find.byType(MaterialApp),
+        matchesGoldenFile('goldens/ta01_expanded_tablet.png'),
+      );
     });
 
     testWidgets('TA-01 1440x900 Expanded Desktop Golden', (tester) async {
@@ -110,6 +126,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('How Today’s Arena Works'), findsOneWidget);
+      await expectLater(
+        find.byType(MaterialApp),
+        matchesGoldenFile('goldens/ta01_expanded_desktop.png'),
+      );
     });
 
     testWidgets('TA-02 390x844 Situation Reveal Compact Golden', (
@@ -129,6 +149,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Reactor Engineer'), findsOneWidget);
+      await expectLater(
+        find.byType(MaterialApp),
+        matchesGoldenFile('goldens/ta02_compact_portrait.png'),
+      );
     });
 
     testWidgets('TA-02 1440x900 Situation Reveal Expanded Golden', (
@@ -150,6 +174,10 @@ void main() {
       expect(find.text('Reactor Engineer'), findsOneWidget);
       expect(find.text('Colony Coordinator'), findsOneWidget);
       expect(find.text('I understand the situation'), findsOneWidget);
+      await expectLater(
+        find.byType(MaterialApp),
+        matchesGoldenFile('goldens/ta02_expanded_desktop.png'),
+      );
     });
 
     testWidgets('TA-02 Facts Panel Overlay Golden', (tester) async {
@@ -189,6 +217,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Reactor Engineer'), findsOneWidget);
+      await expectLater(
+        find.byType(MaterialApp),
+        matchesGoldenFile('goldens/ta01_text_scale_200.png'),
+      );
     });
 
     testWidgets('reduced motion setting layout golden check', (tester) async {
@@ -199,6 +231,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Mars Rescue'), findsOneWidget);
+      await expectLater(
+        find.byType(MaterialApp),
+        matchesGoldenFile('goldens/ta01_reduced_motion.png'),
+      );
     });
   });
 }

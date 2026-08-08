@@ -5,8 +5,9 @@ import 'package:mind_arena/design/tokens/mind_spacing.dart';
 import 'package:mind_arena/design/typography/mind_typography.dart';
 import 'package:mind_arena/domain/models/arena_package.dart';
 
-/// Card rendering a scenario role in presentation mode for TA-02 Situation.
-/// Uses custom vector glyphs, category color accents, and subtle glassmorphic depth.
+/// Presentation card rendering a scenario role for TA-02 Situation.
+/// Consumes pure domain model properties (`title`, `description`, `categoryTag`, `guardianRelationshipLabel`)
+/// without role-ID presentation branching.
 class RoleCard extends StatefulWidget {
   const RoleCard({super.key, required this.role});
 
@@ -19,39 +20,21 @@ class RoleCard extends StatefulWidget {
 class _RoleCardState extends State<RoleCard> {
   bool _isHovered = false;
 
-  (IconData, Color, String) _getRoleTheme(String title) {
-    if (title.contains('Engineer')) {
-      return (
-        Icons.bolt_rounded,
-        MindColors.roleEngineering,
-        'Power & Systems',
-      );
-    } else if (title.contains('Physician')) {
-      return (
-        Icons.medical_services_outlined,
-        MindColors.roleMedical,
-        'Medicine & Trauma',
-      );
-    } else if (title.contains('Pilot')) {
-      return (
-        Icons.flight_takeoff_rounded,
-        MindColors.roleFlight,
-        'Aviation & Orbit',
-      );
-    } else if (title.contains('Scientist')) {
-      return (Icons.eco_outlined, MindColors.roleBiology, 'Ecology & Food');
-    } else if (title.contains('Dependent')) {
-      return (
-        Icons.child_care_rounded,
-        MindColors.roleGuardian,
-        'Minor / Protection',
-      );
+  (IconData, Color) _getCategoryVisuals(String? categoryTag) {
+    final tag = categoryTag?.toLowerCase() ?? '';
+
+    if (tag.contains('engineering') || tag.contains('power')) {
+      return (Icons.bolt_rounded, MindColors.roleEngineering);
+    } else if (tag.contains('medicine') || tag.contains('trauma')) {
+      return (Icons.medical_services_outlined, MindColors.roleMedical);
+    } else if (tag.contains('aviation') || tag.contains('orbit')) {
+      return (Icons.flight_takeoff_rounded, MindColors.roleFlight);
+    } else if (tag.contains('ecology') || tag.contains('agriculture')) {
+      return (Icons.eco_outlined, MindColors.roleBiology);
+    } else if (tag.contains('dependent') || tag.contains('family')) {
+      return (Icons.child_care_rounded, MindColors.roleGuardian);
     } else {
-      return (
-        Icons.account_balance_outlined,
-        MindColors.roleGovernance,
-        'Governance',
-      );
+      return (Icons.account_balance_outlined, MindColors.roleGovernance);
     }
   }
 
@@ -62,11 +45,14 @@ class _RoleCardState extends State<RoleCard> {
         ? MindSpacing.radiusCardCompact
         : MindSpacing.radiusCardExpanded;
 
-    final (icon, accentColor, categoryTag) = _getRoleTheme(widget.role.title);
+    final categoryTag = widget.role.categoryTag ?? 'Scenario Role';
+    final (icon, accentColor) = _getCategoryVisuals(categoryTag);
+    final guardianNote = widget.role.guardianRelationshipLabel;
 
-    final guardianNote = widget.role.guardianToRoleId != null
-        ? 'Public guardian to Young Dependent'
-        : null;
+    final reducedMotion = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final animationDuration = reducedMotion
+        ? Duration.zero
+        : const Duration(milliseconds: 180);
 
     final semanticLabel = guardianNote != null
         ? '${widget.role.title}. Category: $categoryTag. ${widget.role.description}. $guardianNote.'
@@ -76,7 +62,7 @@ class _RoleCardState extends State<RoleCard> {
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
+        duration: animationDuration,
         curve: Curves.easeOut,
         padding: const EdgeInsets.all(MindSpacing.space16),
         decoration: BoxDecoration(
@@ -105,15 +91,12 @@ class _RoleCardState extends State<RoleCard> {
           container: true,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Role Icon Badge Container
                   Container(
-                    width: 38.0,
-                    height: 38.0,
+                    padding: const EdgeInsets.all(MindSpacing.space8),
                     decoration: BoxDecoration(
                       color: accentColor.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(
@@ -133,17 +116,19 @@ class _RoleCardState extends State<RoleCard> {
                       children: [
                         Text(
                           widget.role.title,
-                          style: MindTypography.cardTitle(context),
+                          style: MindTypography.cardTitle(
+                            context,
+                          ).copyWith(fontWeight: FontWeight.w700),
                         ),
-                        const SizedBox(height: MindSpacing.space4),
+                        const SizedBox(height: 2.0),
                         Text(
                           categoryTag,
                           style:
-                              MindTypography.supporting(
+                              MindTypography.label(
                                 context,
                                 color: accentColor,
                               ).copyWith(
-                                fontSize: 12.0,
+                                fontSize: 11.0,
                                 fontWeight: FontWeight.w600,
                               ),
                         ),
@@ -158,7 +143,7 @@ class _RoleCardState extends State<RoleCard> {
                 style: MindTypography.body(
                   context,
                   color: MindColors.textSecondary,
-                ).copyWith(fontSize: 14.5, height: 1.45),
+                ).copyWith(fontSize: 13.5, height: 1.45),
               ),
               if (guardianNote != null) ...[
                 const SizedBox(height: MindSpacing.space12),
@@ -168,30 +153,36 @@ class _RoleCardState extends State<RoleCard> {
                     vertical: MindSpacing.space8,
                   ),
                   decoration: BoxDecoration(
-                    color: MindColors.worldConsequence.withValues(alpha: 0.12),
+                    color: MindColors.roleGuardian.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(
                       MindSpacing.radiusControl,
                     ),
                     border: Border.all(
-                      color: MindColors.worldConsequence.withValues(alpha: 0.6),
+                      color: MindColors.roleGuardian.withValues(alpha: 0.4),
                       width: 1.0,
                     ),
                   ),
-                  child: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: MindSpacing.space8,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       const Icon(
                         Icons.shield_outlined,
                         size: 14.0,
-                        color: MindColors.worldConsequence,
+                        color: MindColors.roleGuardian,
                       ),
-                      Text(
-                        guardianNote,
-                        style: MindTypography.supporting(
-                          context,
-                          color: MindColors.worldConsequence,
-                        ).copyWith(fontSize: 12.0, fontWeight: FontWeight.w600),
+                      const SizedBox(width: MindSpacing.space8),
+                      Flexible(
+                        child: Text(
+                          guardianNote,
+                          style:
+                              MindTypography.label(
+                                context,
+                                color: MindColors.roleGuardian,
+                              ).copyWith(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
                       ),
                     ],
                   ),

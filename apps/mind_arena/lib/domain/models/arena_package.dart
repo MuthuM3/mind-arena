@@ -7,13 +7,17 @@ final class ArenaRole {
     required this.id,
     required this.title,
     required this.description,
+    this.categoryTag,
     this.guardianToRoleId,
+    this.guardianRelationshipLabel,
   });
 
   final String id;
   final String title;
   final String description;
+  final String? categoryTag;
   final String? guardianToRoleId;
+  final String? guardianRelationshipLabel;
 
   @override
   bool operator ==(Object other) =>
@@ -23,14 +27,23 @@ final class ArenaRole {
           id == other.id &&
           title == other.title &&
           description == other.description &&
-          guardianToRoleId == other.guardianToRoleId;
+          categoryTag == other.categoryTag &&
+          guardianToRoleId == other.guardianToRoleId &&
+          guardianRelationshipLabel == other.guardianRelationshipLabel;
 
   @override
-  int get hashCode => Object.hash(id, title, description, guardianToRoleId);
+  int get hashCode => Object.hash(
+    id,
+    title,
+    description,
+    categoryTag,
+    guardianToRoleId,
+    guardianRelationshipLabel,
+  );
 
   @override
   String toString() =>
-      'ArenaRole(id: $id, title: $title, guardianToRoleId: $guardianToRoleId)';
+      'ArenaRole(id: $id, title: $title, categoryTag: $categoryTag, guardianToRoleId: $guardianToRoleId)';
 }
 
 /// Represents an immutable public fact in the scenario.
@@ -86,9 +99,11 @@ final class MarsRescuePackage {
   MarsRescuePackage({
     required this.id,
     required this.contentVersion,
+    required this.locale,
     required this.title,
     required this.premise,
     required this.stakesLine,
+    required this.socialTruthLabel,
     required this.audienceClassification,
     required this.estimatedMinutes,
     required List<ArenaRole> roles,
@@ -99,9 +114,11 @@ final class MarsRescuePackage {
 
   final String id;
   final String contentVersion;
+  final String locale;
   final String title;
   final String premise;
   final String stakesLine;
+  final String socialTruthLabel;
   final String audienceClassification;
   final int estimatedMinutes;
   final List<ArenaRole> roles;
@@ -115,9 +132,11 @@ final class MarsRescuePackage {
           runtimeType == other.runtimeType &&
           id == other.id &&
           contentVersion == other.contentVersion &&
+          locale == other.locale &&
           title == other.title &&
           premise == other.premise &&
           stakesLine == other.stakesLine &&
+          socialTruthLabel == other.socialTruthLabel &&
           audienceClassification == other.audienceClassification &&
           estimatedMinutes == other.estimatedMinutes &&
           _listEquals(roles, other.roles) &&
@@ -128,9 +147,11 @@ final class MarsRescuePackage {
   int get hashCode => Object.hash(
     id,
     contentVersion,
+    locale,
     title,
     premise,
     stakesLine,
+    socialTruthLabel,
     audienceClassification,
     estimatedMinutes,
     Object.hashAll(roles),
@@ -140,7 +161,7 @@ final class MarsRescuePackage {
 
   @override
   String toString() =>
-      'MarsRescuePackage(id: $id, version: $contentVersion, title: $title)';
+      'MarsRescuePackage(id: $id, version: $contentVersion, locale: $locale, title: $title)';
 }
 
 bool _listEquals<T>(List<T>? a, List<T>? b) {

@@ -9,10 +9,12 @@ final class MarsRescueLocalRepository implements ArenaRepository {
   static final _normalPackage = MarsRescuePackage(
     id: 'mars_rescue',
     contentVersion: 'M1.1.0',
+    locale: 'en-US',
     title: 'Mars Rescue',
     premise:
         'Main fusion reactor core containment has breached at an isolated surface outpost on Mars. Atmospheric and life-support collapse of the colony habitat is imminent.',
     stakesLine: 'One shuttle. Three seats. Six lives and six responsibilities.',
+    socialTruthLabel: 'Shared with real people · Not live',
     audienceClassification: 'Adult-Only 18+',
     estimatedMinutes: 3,
     roles: const [
@@ -21,37 +23,44 @@ final class MarsRescueLocalRepository implements ArenaRepository {
         title: 'Reactor Engineer',
         description:
             'Responsible for colony power systems, life-support reactor operation, and executing the post-separation remote dampening fallback from the shuttle.',
+        categoryTag: 'Engineering & Power',
       ),
       ArenaRole(
         id: 'physician',
         title: 'Physician',
         description:
             'Responsible for medical diagnostic assessment, emergency trauma response, and in-transit health management.',
+        categoryTag: 'Medicine & Trauma',
       ),
       ArenaRole(
         id: 'shuttle_pilot',
         title: 'Shuttle Pilot',
         description:
             'Responsible for spacecraft pre-flight verification, orbital exit navigation, and shuttle landing maneuvers.',
+        categoryTag: 'Aviation & Orbit',
       ),
       ArenaRole(
         id: 'agricultural_scientist',
         title: 'Agricultural Scientist',
         description:
             'Responsible for closed-loop food systems, bio-regenerative life support, and long-term crop ecology.',
+        categoryTag: 'Ecology & Agriculture',
       ),
       ArenaRole(
         id: 'young_dependent',
         title: 'Young Dependent',
         description:
             'A minor community member under formal guardianship, reliant on legal, physical, and emotional care.',
+        categoryTag: 'Dependent Care',
       ),
       ArenaRole(
         id: 'colony_coordinator',
         title: 'Colony Coordinator',
         description:
             'Responsible for administrative governance, habitat resource allocation, and formal guardian to the Young Dependent.',
+        categoryTag: 'Governance & Coordination',
         guardianToRoleId: 'young_dependent',
+        guardianRelationshipLabel: 'Public guardian to Young Dependent',
       ),
     ],
     facts: const [
@@ -87,9 +96,11 @@ final class MarsRescueLocalRepository implements ArenaRepository {
   static final _malformedPackage = MarsRescuePackage(
     id: 'mars_rescue_malformed',
     contentVersion: 'M1.1.0',
+    locale: 'en-US',
     title: 'Mars Rescue',
     premise: 'Reactor failure',
     stakesLine: 'Broken package',
+    socialTruthLabel: 'Shared with real people · Not live',
     audienceClassification: 'Adult-Only 18+',
     estimatedMinutes: 3,
     roles: const [
@@ -121,6 +132,10 @@ final class MarsRescueLocalRepository implements ArenaRepository {
   }
 
   /// Validates package integrity according to domain invariants.
+  static void validatePackage(MarsRescuePackage package) {
+    _validatePackage(package);
+  }
+
   static void _validatePackage(MarsRescuePackage package) {
     if (package.id.trim().isEmpty) {
       throw const PackageValidationException('Package ID cannot be empty.');
@@ -129,6 +144,9 @@ final class MarsRescueLocalRepository implements ArenaRepository {
       throw const PackageValidationException(
         'Package content version cannot be empty.',
       );
+    }
+    if (package.locale.trim().isEmpty) {
+      throw const PackageValidationException('Package locale cannot be empty.');
     }
     if (package.title.trim().isEmpty) {
       throw const PackageValidationException('Package title cannot be empty.');
@@ -141,6 +159,11 @@ final class MarsRescueLocalRepository implements ArenaRepository {
     if (package.stakesLine.trim().isEmpty) {
       throw const PackageValidationException(
         'Package stakes line cannot be empty.',
+      );
+    }
+    if (package.socialTruthLabel.trim().isEmpty) {
+      throw const PackageValidationException(
+        'Package social truth label cannot be empty.',
       );
     }
     if (package.audienceClassification.trim().isEmpty) {
